@@ -1,4 +1,4 @@
-// >>>>>> Handling traffic to the server <<<<<<
+// >>>>> Handling traffic to the server <<<<<
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ const connectDB = require("./config/db");
 
 const server = app.listen(port, () => console.log('Server listening on port ' + port));
  
-// Connect to MongoDB
+// >>>>> Connect to database <<<<<
 connectDB();
 
 app.set("view engine", "pug");
