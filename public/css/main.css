@@ -1,0 +1,45 @@
+:root{
+  --pastelBlue: #34568B;
+  --pastelBlueLite: #a5b7d9;
+}
+
+a{
+  color: inherit;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #fff;
+}
+
+
+nav{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+}
+
+nav a {
+  display: flex;
+  padding: 10px;
+  font-size: 30px;
+  width: 55px;
+  height: 55px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+nav a.logo{
+  color: var(--pastelBlue);
+}
+
+nav a:hover{
+  background-color: var(--pastelBlueLite);
+  border-radius: 50%;
+}
+
+.mainSectionContainer{
+  background-color: var(--pastelBlueLite);
+}
