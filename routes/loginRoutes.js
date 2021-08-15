@@ -1,11 +1,49 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const User = require('../schemas/UserSchema');
+
 
 app.set("view engine", "pug");
 app.set("views", "views");
 
-router.get('/', (req, res, next) => {
+app.get(bodyParser.urlencoded({ extended: false }));
+
+router.get("/", (req, res, next) => {
+  res.status(200).render("login");
+})
+
+router.post('/', async (req, res, next) => {
+  var payload = req.body;
+  // req from login.pug
+  if(req.body.logUsername && req.body.logPassword){
+    var user = await User.findOne({ 
+      $or: [
+        { username: req.body.logUsername },
+        { email: req.body.logUsername },
+      ]
+    })
+   .catch((error) => {
+      console.log(error);
+      payload.errorMessage = "Something went wrong o_O";
+      res.status(200).render("register", payload);
+   })
+
+   if(user != null){
+     // function compare(data: string | Buffer, encrypted: string): Promise<boolean> (+1 overload)
+      var result = await bcrypt.compare(req.body.logPassword, user.password);
+
+      if(result === true){
+        req.session.user = user;
+        return res.redirect("/");
+      }
+   }
+   payload.errorMessage = "Incorrect credentials o_O";
+   res.status(200).render("login", payload);
+  }
+  payload.errorMessage = "Please fill out all fields =)";
   res.status(200).render("login");
 })
 

@@ -3,11 +3,12 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const User = require('../schemas/UserSchema');
+const bcrypt = require('bcrypt');
+
 
 app.set("view engine", "pug");
 app.set("views", "views");
 
-// >>>>> setting up body-parser <<<<<
 app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get('/', (req, res, next) => {
@@ -43,7 +44,17 @@ router.post('/', async (req, res, next) => {
 
    // If no user is found:
    if(user == null){
+    var data = req.body;
 
+    // hash(data: string | Buffer, saltOrRounds: string | number): Promise<string>
+    data.password = await bcrypt.hash(password, 10)
+
+    User.create(data)
+    .then((user) => {
+      // setting user's session:
+      req.session.user = user;
+      return res.redirect('/');
+    })
    }
    else{
      // When same user is found:
