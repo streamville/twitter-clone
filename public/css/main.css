@@ -1,6 +1,11 @@
 :root{
   --pastelBlue: #34568B;
   --pastelBlueLite: #a5b7d9;
+  --spacing: 15px;
+}
+
+*{
+  outline: none !important;
 }
 
 a{
@@ -12,6 +17,11 @@ a:hover{
   color: #fff;
 }
 
+h1 {
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+}
 
 nav{
   display: flex;
@@ -28,7 +38,6 @@ nav a {
   height: 55px;
   align-items: center;
   justify-content: center;
-
 }
 
 nav a.logo{
@@ -41,5 +50,65 @@ nav a:hover{
 }
 
 .mainSectionContainer{
+  padding: 0;
+  border-left: 1px solid var(--pastelBlueLite);
+  border-right: 1px solid var(--pastelBlueLite);
+  display: flex;
+  flex-direction: column;
+}
+
+.titleContainer{
+  height: 53px;
+  padding: 0 var(--spacing);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--pastelBlueLite);
+  /* safari */
+  flex-shrink: 0;
+}
+
+.titleContainer h1{
+  flex: 1;
+}
+
+.postFormContainer {
+  display: flex;
+  padding: var(--spacing);
+  border-bottom: 8px solid var(--pastelBlueLite);
+  flex-shrink: 0;
+}
+
+.userImageContainer{
+  width: 50px;
+  height: 50px;
+}
+
+.userImageContainer img{
+  width: 100%;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.textAreaContainer{
+  flex: 1;
+  padding-left: var(--spacing);
+}
+
+.textAreaContainer textarea{
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 18px;
+}
+
+#submitPostButton{
+  background-color: var(--pastelBlue);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 7px 15px;
+}
+
+#submitPostButton:disabled{
   background-color: var(--pastelBlueLite);
 }

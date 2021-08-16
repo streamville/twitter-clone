@@ -1,7 +1,12 @@
-* {
-  background-color: #0099ff;
+:root{
+  --pastelBlue: #34568B;
+  --pastelBlueLite: #a5b7d9;
+  --spacing: 15px;
 }
 
+* {
+  background-color: var(--pastelBlue);
+}
 .wrapper{
   display: flex;
   justify-content: center;
@@ -41,10 +46,14 @@ input[type="password"]{
 }
 
 input[type="submit"]{
-  background-color: #0099ff;
+  background-color: var(--pastelBlue);
   border: none;
   border-radius: 2px;
   margin-bottom: 10px;
   color: white;
   padding: 5px 10px;
+}
+
+input[type="submit"]:hover{
+  background-color: var(--pastelBlueLite);
 }
