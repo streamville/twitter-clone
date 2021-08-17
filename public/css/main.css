@@ -49,6 +49,12 @@ nav a:hover{
   border-radius: 50%;
 }
 
+button{
+  background-color: transparent;
+  border: none;
+  color: darkslategray;
+}
+
 .mainSectionContainer{
   padding: 0;
   border-left: 1px solid var(--pastelBlueLite);
@@ -111,4 +117,63 @@ nav a:hover{
 
 #submitPostButton:disabled{
   background-color: var(--pastelBlueLite);
+}
+
+.post{
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing);
+  cursor: pointer;
+  border-bottom: 1px solid var(--pastelBlueLite);
+  flex-shrink: 0;
+}
+
+.mainContentContainer{
+  display: flex;
+  flex: 1;
+}
+
+.postContentContainer{
+  padding-left: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.username,
+.timestamp{
+  color: var(--pastelBlueLite);
+}
+
+.username:hover{
+  color: var(--pastelBlue);
+}
+
+.displayName{
+  font-weight: bold;
+}
+
+.postFooter{
+  display: flex;
+  align-items: center;
+}
+
+.postFooter .postButtonContainer{
+  flex: 1;
+  display: flex;
+}
+
+.postFooter .postButtonContainer button {
+  padding: 2px 5px;
+}
+
+.header a,
+.header span{
+  padding-right: 5px;
+}
+
+.postButtonContainer button:hover{
+  background-color: var(--pastelBlueLite);
+  color: var(--pastelBlue);
+  border-radius: 50%;
 }
