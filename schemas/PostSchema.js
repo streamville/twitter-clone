@@ -10,7 +10,11 @@ const PostSchema = new Schema({
     // types from MongoDB:
     type: Schema.Types.ObjectId,
     ref: "User",
-    pin: Boolean
+    pin: Boolean,
+    likes: [{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    }]
   }
 }, { timestamps: true });
 

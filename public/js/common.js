@@ -3,6 +3,7 @@ $('#postTextarea').keyup(event => {
   var value = textbox.val().trim()
   var submitButton = $('#submitPostButton');
 
+
   if(submitButton.length == 0){
     console.log("No submit button found");
   }
@@ -33,11 +34,21 @@ $('#submitPostButton').click(() => {
   })
 })
 
+// Like button:
+$(document).on("click", ".likeButton", () => {
+  alert("button clicked");
+})
+
+// create reuseable container for posts:
 function createPostHtml(postData){
 
   var postedBy = postData.postedBy;
+
+  if(postedBy._id === undefined){
+    return console.log("user object not populate");
+  }
   var displayName = postedBy.firstName + " " + postedBy.lastName;
-  var timestamp = postData.createdAt;;
+  var timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
   return `<div class="post">
             <div class="mainContentContainer">
@@ -45,13 +56,13 @@ function createPostHtml(postData){
                 <img src='${postedBy.profileLogo}'/>
               </div>
 
-              <div class="postContentContainer'>
+              <div class="postContentContainer">
                 <div class="header">
                 <span class="displayName">${displayName}</span>
                   <a class="username" href="/profile/${postedBy.username}">@${postedBy.username}</a>
                   <span class="timestamp">${timestamp}</span>
                 </div>
-                
+
                 <div class="postBody">
                   <span>${postData.content}</span>
                 </div>
@@ -64,7 +75,7 @@ function createPostHtml(postData){
                     <button>
                       <i class="fas fa-retweet"></i>
                     </button>
-                    <button>
+                    <button class="likeButton">
                       <i class="fas fa-heart"></i>
                     </button>
                   </div>
@@ -72,4 +83,35 @@ function createPostHtml(postData){
               </div>
             </div>
           </div>`
+}
+
+// for timestamp:
+function timeDifference(current, previous) {
+
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+       if(elapsed/1000 < 30) return "just now";   
+  }
+  else if (elapsed < msPerHour) {
+       return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+  }
+  else if (elapsed < msPerDay ) {
+       return Math.round(elapsed/msPerHour ) + ' hours ago';   
+  }
+  else if (elapsed < msPerMonth) {
+      return Math.round(elapsed/msPerDay) + ' days ago';   
+  }
+  else if (elapsed < msPerYear) {
+      return Math.round(elapsed/msPerMonth) + ' months ago';   
+  }
+  else {
+      return Math.round(elapsed/msPerYear ) + ' years ago';   
+  }
 }
