@@ -42,4 +42,24 @@ router.post('/', async (req, res, next) => {
   })
 })
 
+// LIKE button - PUT request by Ajax:
+router.put('/:id/like', async (req, res, next) => {
+  
+  var postId = req.params.id;
+  var userId = req.session.user._id;
+
+  var isLiked = req.session.user.likes && req.session.user.likes.includes(postId);
+
+  // $addToSet is from MongoDB.
+  var option = isLiked ? "$pull" : "$addToSet";
+
+  // Insert user like:
+  await User.findByIdAndUpdate(userId, { [option]: { likes: postId } })
+
+  // Insert post like
+
+
+  res.status(200).send("YAHOO");
+  })
+
 module.exports = router;

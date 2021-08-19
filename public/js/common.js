@@ -36,8 +36,29 @@ $('#submitPostButton').click(() => {
 
 // Like button:
 $(document).on("click", ".likeButton", () => {
-  alert("button clicked");
+  var button = $(event.target);
+  var postId = getPostIdFromElement(button)
+  
+  if(postId === undefined) return;
+
+  $.ajax({
+    url: `/api/posts/${postId}/like`,
+    type: "PUT",
+    success: (postData) => {
+      console.log(postData);
+    }
+  })
 })
+
+function getPostIdFromElement(element){
+  var isRoot = element.hasClass("post");
+  var rootElement = isRoot ? element : element.closest(".post");
+  var postId = rootElement.data().id;
+
+  if(postId === undefined) return alert("postId undefined")
+
+  return postId;
+}
 
 // create reuseable container for posts:
 function createPostHtml(postData){
@@ -50,7 +71,7 @@ function createPostHtml(postData){
   var displayName = postedBy.firstName + " " + postedBy.lastName;
   var timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
-  return `<div class="post">
+  return `<div class="post" data-id="${postData._id}">
             <div class="mainContentContainer">
               <div class="userImageContainer">
                 <img src='${postedBy.profileLogo}'/>
