@@ -26,7 +26,7 @@ $('#submitPostButton').click(() => {
   }
   // ajax:
   $.post("/api/posts", data, postData => {
-    console.log(postData);
+    
     var html = createPostHtml(postData);
     $(".postsContainer").prepend(html);
     textbox.val = "";
@@ -35,9 +35,9 @@ $('#submitPostButton').click(() => {
 })
 
 // Like button:
-$(document).on("click", ".likeButton", () => {
+$(document).on("click", ".likeButton", (event) => {
   var button = $(event.target);
-  var postId = getPostIdFromElement(button)
+  var postId = getPostIdFromElement(button);
   
   if(postId === undefined) return;
 
@@ -45,14 +45,14 @@ $(document).on("click", ".likeButton", () => {
     url: `/api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
-      console.log(postData);
+      button.find("span").ext(postData.likes.length || "");
     }
   })
 })
 
 function getPostIdFromElement(element){
   var isRoot = element.hasClass("post");
-  var rootElement = isRoot ? element : element.closest(".post");
+  var rootElement = isRoot == true ? element : element.closest(".post");
   var postId = rootElement.data().id;
 
   if(postId === undefined) return alert("postId undefined")
@@ -98,6 +98,7 @@ function createPostHtml(postData){
                     </button>
                     <button class="likeButton">
                       <i class="fas fa-heart"></i>
+                      <span>${postData.likes.length || ""}</span>
                     </button>
                   </div>
                 </div>

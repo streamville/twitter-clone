@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const User = require('../../schemas/UserSchema');
 const Post = require('../../schemas/PostSchema');
 
-app.get(bodyParser.urlencoded({ extended: false }));
+app.get(bodyParser.urlencoded({ extended: true }));
 
 router.get("/", (req, res, next) => {
   Post.find()
@@ -48,18 +48,28 @@ router.put('/:id/like', async (req, res, next) => {
   var postId = req.params.id;
   var userId = req.session.user._id;
 
+
   var isLiked = req.session.user.likes && req.session.user.likes.includes(postId);
 
   // $addToSet is from MongoDB.
   var option = isLiked ? "$pull" : "$addToSet";
 
   // Insert user like:
-  await User.findByIdAndUpdate(userId, { [option]: { likes: postId } })
+  req.session.user = await User.findByIdAndUpdate(userId, { [option]: { likes: postId }}, { new: true })
+  .catch(error => {
+    console.log(error);
+    res.sendStatus(400);
+  })
 
   // Insert post like
+  var post = await Post.findByIdAndUpdate(postId, { [option]: { likes: userId }}, { new: true })
+  .catch(error => {
+    console.log(error);
+    res.sendStatus(400);
+  })
 
 
-  res.status(200).send("YAHOO");
+  res.status(200).send(post);
   })
 
 module.exports = router;
