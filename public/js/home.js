@@ -6,6 +6,7 @@ $(document).ready(() => {
 
 function outputPosts(results, container){
   container.html("");
+  
   results.forEach(result => {
     var html = createPostHtml(result)
     container.append(html);

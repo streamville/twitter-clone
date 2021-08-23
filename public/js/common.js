@@ -45,7 +45,7 @@ $(document).on("click", ".likeButton", (event) => {
     url: `/api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
-      button.find("span").ext(postData.likes.length || "");
+      button.find("span").text(postData.likes.length || "");
     }
   })
 })
@@ -62,7 +62,7 @@ function getPostIdFromElement(element){
 
 // create reuseable container for posts:
 function createPostHtml(postData){
-
+  console.log(postData);
   var postedBy = postData.postedBy;
 
   if(postedBy._id === undefined){

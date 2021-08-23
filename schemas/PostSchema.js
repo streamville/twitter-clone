@@ -9,14 +9,14 @@ const PostSchema = new Schema({
   postedBy: { 
     // types from MongoDB:
     type: Schema.Types.ObjectId,
-    ref: "User",
-    pin: Boolean,
-    likes: [{
+    ref: "User"
+  },
+  pin: Boolean,
+  likes: [{
       type: Schema.Types.ObjectId,
       ref: "User",
     }]
-  }
-}, { timestamps: true });
+  }, { timestamps: true });
 
 var Post = mongoose.model('Post', PostSchema);
 module.exports = Post;
