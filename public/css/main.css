@@ -182,3 +182,7 @@ button span {
   color: var(--pastelBlue);
   border-radius: 50%;
 }
+
+.postButtonContainer.red button.active{
+  color: darkred;
+}
