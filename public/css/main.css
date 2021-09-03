@@ -89,6 +89,12 @@ button span {
   flex-shrink: 0;
 }
 
+.modal .postFormContainer{
+  border: none;
+  padding: 0;
+  padding-top: var(--spacing);
+}
+
 .userImageContainer{
   width: 50px;
   height: 50px;
@@ -177,12 +183,24 @@ button span {
   padding-right: 5px;
 }
 
-.postButtonContainer button:hover{
-  background-color: var(--pastelBlueLite);
-  color: var(--pastelBlue);
-  border-radius: 50%;
+.postButtonContainer.red button.active{
+  color: red;
+}
+.postButtonContainer.red button:hover{
+  color: red;
 }
 
-.postButtonContainer.red button.active{
-  color: darkred;
+.postButtonContainer.green button.active{
+  color: green;
+}
+
+.postButtonContainer.green button:hover{
+  color: green;
+}
+
+.postActionContainer{
+  padding-left: 35px;
+  font-size: 12px;
+  color: lightgray;
+  margin-bottom: 5px;
 }
