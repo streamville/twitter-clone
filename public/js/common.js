@@ -9,11 +9,10 @@ $('#postTextarea, #replyTextarea').keyup(event => {
   }
 
   // disable submitButton if input value is empty:
-  if(value = ""){
+  if(value == ""){
     submitButton.prop("disabled", true);
     return; 
   }
-  // otherwise:
   submitButton.prop("disabled", false);
 })
 
@@ -29,8 +28,18 @@ $('#submitPostButton').click(() => {
     
     var html = createPostHtml(postData);
     $(".postsContainer").prepend(html);
-    textbox.val = "";
+    textbox.val("");
     button.prop("disabled", true);
+  })
+})
+
+// Reply modal:
+$("#replyModal").on("show.bs.modal", (event) => {
+  var button = $(event.relatedTarget);
+  var postId = getPostIdFromElement(button);
+
+  $.get("/api/posts/" + postId, results => {
+    outputPosts(result, $("#originalPostContainer"))
   })
 })
 
@@ -99,8 +108,8 @@ function createPostHtml(postData){
   var retweetedBy = isRetweet ? postData.postedBy.username : null;
   postData = isRetweet ? postData.retweetData : postData;
 
-  console.log(isRetweet);
   var postedBy = postData.postedBy;
+  console.log(postedBy);
 
   if(postedBy._id === undefined){
     return console.log("user object not populate");
@@ -190,5 +199,22 @@ function timeDifference(current, previous) {
   }
   else {
       return Math.round(elapsed/msPerYear ) + ' years ago';   
+  }
+}
+
+// from api/posts.js
+function outputPosts(results, container){
+  container.html("");
+  
+  if(Array.isArray(results)){
+    results = [results];
+  }
+  results.forEach(result => {
+    var html = createPostHtml(result)
+    container.append(html);
+  });
+
+  if(results.length == 0){
+    container.append("<span>Nothing to show</span>")
   }
 }

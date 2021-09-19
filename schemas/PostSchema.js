@@ -7,7 +7,6 @@ const PostSchema = new Schema({
     trim: true 
   },
   postedBy: { 
-    // types from MongoDB:
     type: Schema.Types.ObjectId,
     ref: "User"
   },
